@@ -1,5 +1,5 @@
 document.getElementById('commentForm').addEventListener('submit', function(event) {
-    event.preventDefault(); 
+    event.preventDefault();
 
     // Obtener el valor del comentario
     let commentText = document.getElementById('commentInput').value;
@@ -17,9 +17,17 @@ document.getElementById('commentForm').addEventListener('submit', function(event
     dateParagraph.classList.add('date');
     dateParagraph.textContent = new Date().toLocaleString();
 
-    // Agregar el texto y la fecha al comentario
+    // Crear el botón de eliminar
+    let deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Eliminar';
+    deleteButton.addEventListener('click', function() {
+        commentDiv.remove();
+    });
+
+    // Agregar el texto, la fecha y el botón al comentario
     commentDiv.appendChild(commentParagraph);
     commentDiv.appendChild(dateParagraph);
+    commentDiv.appendChild(deleteButton);
 
     // Agregar el comentario al contenedor de comentarios
     document.getElementById('commentsContainer').appendChild(commentDiv);
