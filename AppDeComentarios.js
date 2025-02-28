@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("Inicializando comentarios.");
+
     // Cargar comentarios guardados al cargar la página
     loadComments();
 
@@ -8,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Obtener el comentario y el nombre del usuario
         let commentText = document.getElementById('commentInput').value;
         let userName = document.getElementById('nameInput').value; // Obtener el nombre
+
+        console.log("Comentario enviado:", { userName, commentText });
 
         // Crear un nuevo elemento de comentario
         let commentDiv = createCommentElement(commentText, userName); // Pasar el nombre
@@ -32,7 +36,7 @@ function createCommentElement(commentText, userName) {
     if (userName) { // Si hay un nombre, agregarlo
         let nameParagraph = document.createElement('p');
         nameParagraph.classList.add('name');
-        nameParagraph.textContent = userName + ":";
+        nameParagraph.textContent = userName + ".";
         commentDiv.appendChild(nameParagraph);
     }
 
@@ -49,6 +53,7 @@ function createCommentElement(commentText, userName) {
     let deleteButton = document.createElement('button');
     deleteButton.textContent = 'Eliminar';
     deleteButton.addEventListener('click', function() {
+        console.log("Comentario eliminado:", commentText);
         commentDiv.remove();
         saveComments(); // Actualizar localStorage al eliminar
     });
@@ -70,11 +75,14 @@ function saveComments() {
     }
 
     localStorage.setItem('comments', JSON.stringify(comments));
+    console.log("Comentarios guardados en localStorage:", comments);
 }
 
 function loadComments() {
     let comments = JSON.parse(localStorage.getItem('comments')) || [];
     let commentsContainer = document.getElementById('commentsContainer');
+
+    console.log("Comentarios cargados desde localStorage:", comments);
 
     comments.forEach(commentHTML => {
         let commentDiv = document.createElement('div');
@@ -86,6 +94,7 @@ function loadComments() {
         let deleteButton = commentDiv.querySelector('button');
         if (deleteButton) {
             deleteButton.addEventListener('click', function() {
+                console.log("Comentario eliminado (cargado desde localStorage):", commentDiv.textContent);
                 commentDiv.remove();
                 saveComments();
             });
